@@ -1,0 +1,25 @@
+{% extends 'school/base.html' %}
+{%load static%}
+
+{% block head %}
+<title>Teachers</title>
+<link rel="stylesheet" href="{% static 'css/teachers.css' %}">
+{% endblock %}
+
+{%block body%}
+{% if teachers %}
+<div id='teachers-container'>
+{% for teacher in teachers%}
+<div class='flex-item'>
+<h2><a href="{% url 'school:teacher' pk=teacher.pk %}">{{teacher.name}}</a></h2>
+<h4 class="job">{{teacher.specialization}}</h4>
+<img class='fimg'src="{{teacher.photo.url}}" alt="">
+</div>
+
+{%endfor%}
+</div>
+{%else%}
+No teachers Yet
+
+{%endif%}
+{%endblock%}

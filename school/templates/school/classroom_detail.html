@@ -1,0 +1,140 @@
+{%extends 'school/base.html' %}
+{% load static%}
+
+{%block head%}
+<title>Classroom {{classroom.class_number}}</title>
+<link rel="stylesheet" href="{% static 'css/classrooms.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Lemon&display=swap" rel="stylesheet">
+<script src="{% static 'js/classroom.js'%}" defer></script>
+{%endblock%}
+
+{%block body%}
+<!--
+<div class="container mt-4">
+<div id='flex-container'>
+<div id='classroom-card' class="flex-item">
+<h3>Classroom Card</h3>
+<table class="table-bordered card-table">
+  <tr>
+    <td class='td-1'>Classroom Number </td>
+    <td>{{classroom.class_number}}</td>
+  </tr>
+  <tr>
+    <td class='td-1'>Classroom Level </td>
+    <td>{{classroom.level}}</td>
+  </tr>
+  <tr>
+    <td class='td-1'>Students Number </td>
+    <td>{{students_number}}</td>
+  </tr>
+</table>
+
+</div>
+
+<div class="flex-item">
+<h3>Classroom Teachers</h3>
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th class='letter' scope="col">Teacher Name</th>
+        <th class='letter' scope="col">Specialization</th>
+      </tr>
+    </thead>
+    <tbody>       
+
+{% for teacher in classroom.classroom_teachers.all %}
+<tr>
+    <td>{{teacher.name}}</td>
+    <td>{{teacher.specialization}}</td>
+  </tr>
+{%endfor%}
+        </tbody>
+        </table>
+</div>
+<div class="flex-item">
+<h3>Students in {{classroom.class_number}} classroom:</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th class='letter' scope="col">Student Name</th>
+            <th class='letter' scope="col">Student Level</th>
+          </tr>
+        </thead>
+        <tbody>       
+    {%for student in classroom.students.all %}
+    <tr>
+        <td>{{student.name}}</td>
+        <td>{{student.level}}</td>
+      </tr>
+    {%endfor%}
+            </tbody>
+            </table>
+</div>
+</div>
+-->
+<div class="container mt-4">
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'info')" id="defaultOpen">Classroom Information</button>
+  <button class="tablinks" onclick="openCity(event, 'teachers')">Teachers</button>
+  <button class="tablinks" onclick="openCity(event, 'students')">Students</button>
+</div>
+
+<div id="info" class="tabcontent">
+    <table class="table-bordered card-table">
+      <tr>
+        <td class='td-1'>Classroom Number </td>
+        <td><b>{{classroom.class_number}}</b></td>
+      </tr>
+      <tr>
+        <td class='td-1'>Classroom Level </td>
+        <td><b>{{classroom.level}}</b></td>
+      </tr>
+      <tr>
+        <td class='td-1'>Students Number </td>
+        <td><b>{{students_number}}</b></td>
+      </tr>
+    </table>
+    
+    </div>
+
+<div id="teachers" class="tabcontent">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th class='letter' scope="col">Teacher Name</th>
+        <th class='letter' scope="col">Specialization</th>
+      </tr>
+    </thead>
+    <tbody>       
+
+{% for teacher in classroom.classroom_teachers.all %}
+<tr>
+    <td><a href="{% url 'school:teacher' pk=teacher.pk %}">{{teacher.name}}</a></td>
+    <td>{{teacher.specialization}}</td>
+  </tr>
+{%endfor%}
+        </tbody>
+        </table>
+</div>
+
+<div id="students" class="tabcontent">
+  <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th class='letter' scope="col">Student Name</th>
+          <th class='letter' scope="col">Student Level</th>
+        </tr>
+      </thead>
+      <tbody>       
+  {%for student in classroom.students.all %}
+  <tr>
+      <td>{{student.name}}</td>
+      <td>{{student.level}}</td>
+    </tr>
+  {%endfor%}
+          </tbody>
+          </table>
+</div>
+</div>
+
+{%endblock%}

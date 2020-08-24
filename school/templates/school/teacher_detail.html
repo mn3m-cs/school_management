@@ -1,0 +1,41 @@
+{%extends 'school/base.html' %}
+{%load static%}
+
+{%block head%}
+<title>{{teacher.name}}</title>
+<link rel="stylesheet" href="{% static 'css/teachers.css' %}">
+<script src="{% static 'js/classroom.js' %}" defer></script>
+{%endblock%}
+
+
+{%block body%}
+<div class="container">
+    
+<div id='cover-div'>
+<img id='cover' src="{{teacher.specialization.picture.url}}" alt="">
+</div>
+<div id='profile-pic-div'>
+<img id='profile-pic' src="{{teacher.photo.url}}" alt="">
+</div>
+<h3 id='teacher-name'>{{teacher.name}}</h3>
+
+<div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'info')" id="defaultOpen">About</button>
+    <button class="tablinks" onclick="openCity(event, 'ackn')">Achievements</button>
+  </div>
+  
+<div id='info' class='tabcontent'>
+<p><b>Address:</b> {{teacher.address}}</p>
+<p><b>Mobile Number:</b> +{{teacher.phone}}</p>
+<p><b>Age:</b> {{age}} </p>
+</div>
+<div id="ackn" class='tabcontent'>
+<p>{{teacher.achievements}}</p>
+</div>
+
+
+
+
+
+</div>
+{%endblock%}
