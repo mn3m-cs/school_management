@@ -128,7 +128,7 @@
       <tbody>       
   {%for student in classroom.students.all %}
   <tr>
-      <td>{{student.name}}</td>
+      <td><a href="{% url 'school:student_detail' pk=student.pk  %}">{{student.name}}</a></td>
       <td>{{student.level}}</td>
     </tr>
   {%endfor%}

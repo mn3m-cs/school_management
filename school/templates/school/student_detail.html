@@ -1,0 +1,25 @@
+{% extends 'school/base.html' %}
+{%load static%}
+
+{%block head%}
+<title>{{student.name}}</title>
+<link rel="stylesheet" href="{% static 'css/student.css' %}">
+{%endblock%}
+
+
+{%block body%}
+<div class="container">
+<img id='profile_pic' src="{{student.photo.url}}" alt="">
+<p>Name: {{student.name}}</p>
+<p>Academic Number: {{student.academic_number}}</p>
+<p>Classroom Number: {{student.classroom}}</p>
+<p>Leve: {{student.classroom.level}}</p>
+<h5>Personal Information</h5>
+<p>Birth Date: {{student.birth_date}}</p>
+<p>Age: </p>
+<p>Address: {{student.address}}</p>
+<p>Home Phone: {{student.home_phone}}</p>
+<p>Father: {{student.father}}</p>
+<p>Mother: {{student.mother}}</p>
+</div>
+{%endblock%}

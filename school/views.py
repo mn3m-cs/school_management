@@ -51,3 +51,8 @@ class TeacherDetailView(DetailView):
                 context['age'] = TeacherDetailView.calculateAge(self,birth_date)
         context.update(kwargs)
         return super().get_context_data(**context)
+
+class StudentDetailView(DetailView):
+    model = Student
+    contex_object_name = 'student'
+    

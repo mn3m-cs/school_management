@@ -22,8 +22,8 @@ class Teacher(models.Model):
     birth_date = models.DateField(verbose_name='Date of birth')
     #classrooms = models.ForeignKey('school.Classroom',on_delete=models.SET_NULL,related_name='classrooms',null=True)
     photo = models.ImageField(upload_to='teachers/')
-    achievements = models.CharField(max_length=1000,null=True,blank=True)
-    
+    achievements = models.TextField(max_length=1000,null=True,blank=True)
+
     class Meta:
         permissions = (("can_edit_grades","Edit students grades"),)
         ordering = ['name']
@@ -61,16 +61,7 @@ class Student(models.Model):
     birth_date = models.DateField(verbose_name='Date of birth')
     father = models.ForeignKey('school.Father',on_delete=models.SET_NULL,null=True)
     mother = models.ForeignKey('school.Mother',on_delete=models.SET_NULL,null=True)
-
-    levels = [
-        ('1','1'),
-        ('2','2'),
-        ('3','3'),
-        ('4','4'),
-        ('5','5'),
-        ('6','6'),
-    ]
-    level = models.TextField(max_length=2,choices=levels)
+    photo = models.ImageField(upload_to='students/')
 
     def __str__(self):
         return self.name
@@ -97,7 +88,7 @@ class Father(models.Model):
     name = models.CharField(max_length=64)
     national_id = models.IntegerField(unique=True)
     phone = models.IntegerField()
-    work = models.CharField(max_length=150)
+    job = models.CharField(max_length=150)
     birth_date = models.DateField(verbose_name='Date of birth')
 
     def __str__(self):
@@ -107,7 +98,7 @@ class Mother(models.Model):
     name = models.CharField(max_length=64)
     national_id = models.IntegerField(unique=True)
     phone = models.IntegerField()
-    work = models.CharField(max_length=150)
+    job = models.CharField(max_length=150)
     birth_date = models.DateField(verbose_name='Date of birth')
     
     def __str__(self):
