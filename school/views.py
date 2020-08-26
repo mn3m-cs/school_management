@@ -1,15 +1,20 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import TemplateView,ListView,DetailView
 from .models import Classroom,Student,Teacher
 from datetime import date 
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render
 
 class Home(TemplateView):
     template_name = 'school/base.html'
 
-#-----------Classrooms---------------#
+#Manager Views#
+#-----------Classrooms ---------------#
 class ClassroomsListView(ListView):
     model = Classroom
     context_object_name = 'classrooms'
+    
     
 class ClassroomDetailView(DetailView):
     model = Classroom
@@ -56,3 +61,17 @@ class StudentDetailView(DetailView):
     model = Student
     contex_object_name = 'student'
     
+class TestPerm(PermissionRequiredMixin, TemplateView):
+    permission_required = ('school.can_edit_grades')
+    PermissionError('Teachers only can edit grades.')
+    template_name = 'school/hi.html'
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Teacher').exists())
+def my_classrooms(request):
+    teacher = Teacher.objects.get(user=request.user)
+    classrooms = teacher.classrooms.all()
+
+    return render(request,'school/my_classrooms.html',context={'classrooms':classrooms,
+                                                                'teacher':teacher})
+

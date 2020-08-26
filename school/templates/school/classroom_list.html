@@ -7,36 +7,42 @@
 {% endblock %}
 
 {%block body%}
+
+{% if user.is_staff %} <!-- if manager-->
+
 {% if classrooms %}
-<div class="classrooms mt-4">
-    <div class="container ">
-        <h1 class="mb-4">Dar Hagr School Classrooms</h1>        
-    <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th class='letter' scope="col">Classroom Number</th>
-            <th class='letter' scope="col">Level</th>
-          </tr>
-        </thead>
-        <tbody>       
-{%for classroom in classrooms %}
-<tr>
-    <td><a href="{% url 'school:classroom_detail' pk=classroom.pk %}">{{classroom.class_number}}</a></td>
-    <td>{{classroom.level}}</td>
-  </tr>
-{%endfor%}
-        </tbody>
-      </table>
-</div>
-</div>
-{%else%}
-<div class="container mt-4">
-    No classrooms yet.
-</div>
+  <div class="classrooms mt-4">
+      <div class="container ">
+          <h1 class="mb-4">Dar Hagr School Classrooms</h1>        
+      <table class="table table-bordered table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th class='letter' scope="col">Classroom Number</th>
+              <th class='letter' scope="col">Level</th>
+            </tr>
+          </thead>
+          <tbody>       
+  {%for classroom in classrooms %}
+  <tr>
+      <td><a href="{% url 'school:classroom_detail' pk=classroom.pk %}">{{classroom.class_number}}</a></td>
+      <td>{{classroom.level}}</td>
+    </tr>
+  {%endfor%}
+          </tbody>
+        </table>
+  </div>
+  </div>
+  {%else%}
+  <div class="container mt-4">
+      No classrooms yet.
+  </div>
+  {%endif%}
+
+
 {%endif%}
-
-
-
-
+   <!-- if user not staff - if the user is Teacher.
+                student will see forbiden page in all cases in this view , so we don't have to edit any thing in templates
+               -->
 
 {%endblock%}
+

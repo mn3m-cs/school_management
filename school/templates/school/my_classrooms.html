@@ -1,0 +1,23 @@
+{%extends 'school/base.html' %}
+{%load static%}
+{%block head%}
+<title>MY Classrooms</title>
+{%endblock%}
+
+{%block body %}
+<div class="container mt-4">
+    
+<p>Teacher NAME:  {{teacher}}   </p>
+<p>Teacher username:     {{teacher.user}}</p>
+<p> current user: {{request.user}}</p>
+
+{%if classrooms %}    <!-- teacher.classrooms , will work but i make it in views-->
+<h3>Teacher's classrooms</h3>
+{%for classroom in classrooms %}
+<p>{{classroom.class_number}}</p>
+
+{%endfor%}
+{%endif%}
+
+</div>
+{%endblock %}

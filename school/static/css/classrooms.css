@@ -49,8 +49,6 @@ h3{
 #info table{
     margin-top:20px
 }
-* {box-sizing: border-box}
-body {font-family: "Lato", sans-serif;}
 
 /* Style the tab */
 .tab {

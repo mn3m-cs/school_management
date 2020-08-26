@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class School(models.Model):
     name = models.CharField(max_length=64)
@@ -13,6 +15,7 @@ class School(models.Model):
         return self.name
 
 class Teacher(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='teacher_profiles')
     ssn = models.IntegerField(unique=True)
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=264)
@@ -23,6 +26,7 @@ class Teacher(models.Model):
     #classrooms = models.ForeignKey('school.Classroom',on_delete=models.SET_NULL,related_name='classrooms',null=True)
     photo = models.ImageField(upload_to='teachers/')
     achievements = models.TextField(max_length=1000,null=True,blank=True)
+    is_teacher = models.BooleanField(default=True)
 
     class Meta:
         permissions = (("can_edit_grades","Edit students grades"),)
@@ -48,7 +52,8 @@ class Classroom(models.Model):
     #so we want to retieve students of the class in the classroom_detail view
     class Meta:
         ordering = ['class_number']     
-
+        permissions = (('can_see_classrooms','Can see Classrooms'),)
+        
     def __str__(self):
         return str(self.class_number)
 
@@ -65,7 +70,6 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class Course(models.Model):
@@ -103,3 +107,4 @@ class Mother(models.Model):
     
     def __str__(self):
         return self.name
+
