@@ -6,7 +6,7 @@
 
 {%block body %}
 <div class="container mt-4">
-    
+<h1><i><center> GET CLASSROOMS OF THE TEACHER</center></i></h1>
 <p>Teacher NAME:  {{teacher}}   </p>
 <p>Teacher username:     {{teacher.user}}</p>
 <p> current user: {{request.user}}</p>
@@ -18,6 +18,16 @@
 
 {%endfor%}
 {%endif%}
+</div>
+
+<div class="container">
+    <h1><i><center> GET COURSES OF THE TEACHER </center></i> </h1>
+
+<p>Courses</p>
+{%for course in courses %}
+<a href="{% url 'school:course' pk=course.pk %}">{{course.name}} </a>
+
+{%endfor%}
 
 </div>
 {%endblock %}

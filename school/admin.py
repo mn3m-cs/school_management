@@ -10,7 +10,8 @@ admin.site.register(models.Course)
 #admin.site.register(models.Parents)
 admin.site.register(models.Father)
 admin.site.register(models.Mother)
-
+admin.site.register(models.Test)
+admin.site.register(models.Grade)
 
 class TeacherModelAdmin(admin.ModelAdmin):
     list_display = ('user',)

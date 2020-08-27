@@ -21,7 +21,7 @@ class Teacher(models.Model):
     address = models.CharField(max_length=264)
     phone =models.IntegerField()
     classrooms = models.ManyToManyField('school.Classroom',related_name='classroom_teachers')
-    specialization = models.ForeignKey('school.Course',on_delete=models.SET_NULL,null=True)
+    #specialization = models.ForeignKey('school.Course',on_delete=models.SET_NULL,null=True)
     birth_date = models.DateField(verbose_name='Date of birth')
     #classrooms = models.ForeignKey('school.Classroom',on_delete=models.SET_NULL,related_name='classrooms',null=True)
     photo = models.ImageField(upload_to='teachers/')
@@ -62,11 +62,12 @@ class Student(models.Model):
     name = models.CharField(max_length=64)
     home_phone = models.IntegerField()
     address = models.CharField(max_length=280)
-    classroom = models.ForeignKey(Classroom,on_delete=models.SET_NULL,null=True,related_name='students')
+    classroom = models.ForeignKey(Classroom,on_delete=models.CASCADE,related_name='students')
     birth_date = models.DateField(verbose_name='Date of birth')
-    father = models.ForeignKey('school.Father',on_delete=models.SET_NULL,null=True)
-    mother = models.ForeignKey('school.Mother',on_delete=models.SET_NULL,null=True)
+    father = models.ForeignKey('school.Father',on_delete=models.CASCADE)
+    mother = models.ForeignKey('school.Mother',on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='students/')
+    courses = models.ManyToManyField("school.Course")
 
     def __str__(self):
         return self.name
@@ -76,9 +77,37 @@ class Course(models.Model):
     code = models.IntegerField(unique=True)
     name = models.CharField(max_length=64)
     picture = models.ImageField(upload_to='courses')
+    teacher_of_course = models.ForeignKey(Teacher,on_delete=models.CASCADE)
+    classroom = models.ForeignKey("school.classroom",on_delete=models.CASCADE)
     
     def __str__(self):
         return self.name
+
+    def add_course_to_students_in_class(self):
+        students = Student.objects.all()
+        classroom = self.classroom
+        for student in students:
+            if student.classroom == classroom:
+                student.courses.add(self)
+
+    def save(self, *args, **kwargs):
+        self.add_course_to_students_in_class()
+        super(Course, self).save(*args, **kwargs)
+
+class Test(models.Model):
+    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Grade(models.Model):
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    value = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return self.value
+
 '''
 class Parents(models.Model):
     father = models.ForeignKey('school.Father',on_delete=models.SET_NULL,null=True)
