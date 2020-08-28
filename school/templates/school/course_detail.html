@@ -18,7 +18,16 @@
         {%for student in students %}
         <p>{{student.name}}</p>
         {%endfor%}
-        
-</div>
 
+        <center><h1>Tests</h1></center>
+
+{%for test in tests%}
+   <a href="{% url 'school:test_detail' pk=test.pk course_num=test.course.pk %}">{{test.name}}</a>
+
+{%endfor%}
+
+
+
+
+</div>
 {%endblock%}

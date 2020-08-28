@@ -1,0 +1,37 @@
+{%extends 'school/base.html' %}
+{%load static%}
+
+{%block head%}
+<title>{{test.name}}</title>
+{%endblock%}
+
+{%block body%}
+
+<div class="container mt-4">
+    <p>TEST:  {{test.name}} </p>
+    <p>COURSE: {{test.course}} </p>
+    <h3>Students:</h3>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Student</th>
+            <th scope="col">Grade</th>    
+        </tr>
+    </thead>
+    <tbody>
+        {%for student,grade in enrolled_students.items %}
+        <tr>
+            <td>{{student}} </td>
+            <td> {{grade}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+
+
+
+
+</div>
+
+{%endblock%}

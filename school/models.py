@@ -9,13 +9,12 @@ class School(models.Model):
     students_number = models.IntegerField(verbose_name="Number of students in all school") # sum of students in all classes
     location = models.CharField(max_length=280)
     manger = models.CharField(max_length=50)
-    national_id = models.IntegerField(unique=True)
 
     def __str__(self):
         return self.name
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='teacher_profiles')
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     ssn = models.IntegerField(unique=True)
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=264)
@@ -58,16 +57,17 @@ class Classroom(models.Model):
         return str(self.class_number)
 
 class Student(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     academic_number = models.IntegerField(unique=True)
     name = models.CharField(max_length=64)
     home_phone = models.IntegerField()
     address = models.CharField(max_length=280)
     classroom = models.ForeignKey(Classroom,on_delete=models.CASCADE,related_name='students')
     birth_date = models.DateField(verbose_name='Date of birth')
-    father = models.ForeignKey('school.Father',on_delete=models.CASCADE)
-    mother = models.ForeignKey('school.Mother',on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to='students/')
-    courses = models.ManyToManyField("school.Course")
+    father = models.ForeignKey('school.Father',on_delete=models.CASCADE,null=True,blank=True)
+    mother = models.ForeignKey('school.Mother',on_delete=models.CASCADE,null=True,blank=True)
+    photo = models.ImageField(upload_to='students/',blank=True)
+    courses = models.ManyToManyField("school.Course",null=True,blank=True)
 
     def __str__(self):
         return self.name
@@ -103,10 +103,11 @@ class Test(models.Model):
 
 class Grade(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student,on_delete=models.CASCADE)
     value = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return self.value
+        return str(self.value)
 
 '''
 class Parents(models.Model):
@@ -118,6 +119,7 @@ class Parents(models.Model):
         return self.name
 '''
 class Father(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length=64)
     national_id = models.IntegerField(unique=True)
     phone = models.IntegerField()
@@ -128,6 +130,7 @@ class Father(models.Model):
         return self.name
 
 class Mother(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length=64)
     national_id = models.IntegerField(unique=True)
     phone = models.IntegerField()
