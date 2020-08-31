@@ -89,8 +89,13 @@ def my_classrooms(request):
 
 class CourseDetailView(UserPassesTestMixin, DetailView):
     def test_func(self):
+        """
+        test if current user is teacher and he is the teacher of this course
+        """
         self.object = self.get_object()
-        return self.request.user.groups.filter(name='Teacher').exists()
+        teacher_of_the_course = self.object.teacher_of_course.user
+        current_user = self.request.user
+        return self.request.user.groups.filter(name='Teacher').exists() and teacher_of_the_course == current_user
 
     model = Course
     context_object_name = 'course'
@@ -121,7 +126,9 @@ class CourseDetailView(UserPassesTestMixin, DetailView):
 class TestDetailView(UserPassesTestMixin, DetailView):
     def test_func(self):
         self.object = self.get_object()
-        return self.request.user.groups.filter(name='Teacher').exists()
+        teacher_of_the_course = self.object.course.teacher_of_course.user
+        current_user = self.request.user
+        return self.request.user.groups.filter(name='Teacher').exists() and teacher_of_the_course == current_user
 
     model = Test
     context_object_name = 'test'
