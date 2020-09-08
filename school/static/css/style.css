@@ -1,1 +1,159 @@
 * {box-sizing: border-box}
+.b0{
+    background-image:url(../img/aaron-burden-6jYoil2GhVk-unsplash.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    width:100%;
+    height:600px;
+    text-align: left;
+}
+
+.bg-primary {
+   padding: 0;
+   margin: 0px;
+   background-color:aqua!important;
+  width: 0px;
+  height:0px;
+}
+.navbar-dark .navbar-brand {
+    color:#750000;
+}
+.navbar-dark .navbar-brand:hover {
+   color:#080e56 ;
+}
+.div01{
+    background: #ddae87;
+    border: solid 1px yellow;
+    margin: 15px;
+    padding: 10px;
+    opacity: 0.7;
+    border-radius: 15px 50px;
+    position: absolute;
+    left:20px ;
+    width:205px; 
+    height: 50px;
+}
+.div01:hover {
+    color:black;
+    background-color:#bf814d;
+
+}
+.nav01{
+    background: #ddae87;
+    border: solid 1px yellow;
+    margin: 15px;
+    padding: 10px;
+    opacity: 0.7;
+    border-radius: 30px 100px;
+    position: absolute;
+    top: 1px;
+    right: 40px;
+    width:1300px;
+    height:49px;
+}
+.a1{
+    text-decoration:none;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 150%;
+    color:#c76023;
+    word-spacing: normal;
+    position: absolute;
+    top: -10px;
+}
+.a2{
+    padding: 5;
+    color: #801149;
+    font-size: 120%;
+    text-decoration:none;
+    position: absolute;
+    top:2px;
+    right: 1180px;
+    width: 75px;
+    height: 35px;
+}
+.a2:hover{
+    background-color: crimson;
+    color: cyan;
+}
+.a3{
+    color: #801149;
+    font-size: 120%;
+    text-decoration:none;
+    position: absolute;
+    top: 2px;
+    right: 1000px;
+    width: 95px;
+    height: 35px;
+}
+.a3:hover{
+    background-color: crimson;
+    color: cyan;
+}
+.a4{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    border:solid 0px ;
+    border-radius:0px 38px 10px 0px ;
+    padding: 5px;
+    margin: 0px;
+    color:#801149;
+    font-size: 130%;
+    text-decoration:none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 80px;
+    height: 47px;
+}
+.a4:hover{
+    background-color:#ff0000b8;
+    color:#00146b;
+}
+.a5 {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    border:solid 0px ;
+    border-radius:0px 38px 10px 0px ;
+    padding: 5px;
+    margin: 0px;
+    color:#801149;
+    font-size: 130%;
+    text-decoration:none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 80px;
+    height: 47px;
+    text-align: center;
+}
+.a5:hover{
+    background-color:#33ff00 ;
+    color:#00146b;
+}
+p{
+    color: #801149;
+    margin: 70px;
+    font-size:70px;
+    text-align: center;
+}
+p{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    position: absolute;
+    top: 100px;
+    right: 200px;
+}
+p{
+  animation-name: example;
+  animation-duration:5s;
+}
+
+@keyframes example {
+  from {font-size: 50px; position: absolute;
+    top: 0px;
+    right: 200px;
+}
+  to {font-size: 70px; position: absolute;
+    top: 100px;
+    right: 200px;
+}
+}
