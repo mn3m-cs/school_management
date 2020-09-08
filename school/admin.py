@@ -25,8 +25,6 @@ class TestInline(admin.StackedInline):
 
 class StudentInline(admin.TabularInline):
     model= models.Student
-    def get_queryset(request):
-        return Student.objects.filter(classroom=self.object.pk)
 
 
 class GradesInline(admin.TabularInline):
