@@ -13,14 +13,18 @@
     <title>SCHOOL</title>
     {%endblock%}
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="{% url 'school:home' %}"> Dar Hagr School </a>
+<body class="b0">
+ <div class="div01">
+
+    <nav class="nav0 navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="a1 navbar-brand" href="{% url 'school:home' %}"> Dar Hagr School </a>
+       </div>
+       <div class="nav01">
         <ul class="navbar-nav  mr-auto">
         <!-- if the user is manager-->
         {%if user.is_staff %}
-            <li class="nav-item"> <a class="nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
-            <li class="nav-item"> <a class="nav-link" href="{% url 'school:classrooms' %}"> Classrooms </a></li>
+            <li class="nav-item"> <a class="a2 nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
+            <li class="nav-item"> <a class="a3 nav-link" href="{% url 'school:classrooms' %}"> Classrooms </a></li>
         {%endif%}
         <!-- if the user is teacher-->
         {% ifequal user.groups.all.0.name "Teacher" %}
@@ -28,14 +32,15 @@
         {%endifequal%}
 
         {% if user.is_authenticated %}
-            <li class="nav-item"> <a class="nav-link" href="{% url 'accounts:logout' %}"> Logout</a></li>
+            <li class="nav-item"> <a class="a4 nav-link" href="{% url 'accounts:logout' %}"> Logout</a></li>
         {%else%}
-            <li class="nav-item"> <a class="nav-link" href="{% url 'accounts:login' %}"> Login</a></li>
+            <li class="nav-item"> <a class="a5 nav-link" href="{% url 'accounts:login' %}"> Login</a></li>
         {%endif%}
-
+        </div>
     </ul>
     </nav>
 {% block body%}
+                <p>Welcome to <br>Dar Hagr School</p>
 {%endblock%}
 </body>
 </html>
