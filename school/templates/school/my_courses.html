@@ -24,10 +24,28 @@
     <h1><i><center> GET COURSES OF THE TEACHER </center></i> </h1>
 
 <p>Courses</p>
-{%for course in courses %}
-<a href="{% url 'school:course' pk=course.pk %}">{{course.name}} </a>
-
-{%endfor%}
-
+{% if courses %}
+<table class="table">
+<thead class="thead-dark">
+<tr>
+    <th scope="col"> Course </th>
+    <th scope="col"> Classroom </th>
+</tr>
+</thead>
+<tbody>
+    {%for course in courses %}
+    <tr>
+        <td>
+            <a href="{% url 'school:course' pk=course.pk %}">{{course.name}} </a>
+        </td>
+        <td>
+            <strong>{{course.classroom}}</strong>
+        </td>
+    </tr>
+    {%endfor%}
+    
+</tbody>
+</table>
+{%endif%}
 </div>
 {%endblock %}

@@ -105,7 +105,10 @@ class Grade(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     student = models.ForeignKey(Student,on_delete=models.CASCADE)
     value = models.PositiveSmallIntegerField()
-
+    
+    class Meta:
+        unique_together = ['test', 'student']
+    
     def __str__(self):
         return str(self.value)
 

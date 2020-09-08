@@ -83,7 +83,7 @@ def my_classrooms(request):
         if course.teacher_of_course == teacher:
             courses.append(course)
 
-    return render(request,'school/my_classrooms.html',context={'classrooms':classrooms,
+    return render(request,'school/my_courses.html',context={'classrooms':classrooms,
                                                                 'teacher':teacher,
                                                                 'courses':courses})
 
@@ -162,3 +162,73 @@ class TestDetailView(UserPassesTestMixin, DetailView):
         context['enrolled_students'] = students_grades
         context.update(kwargs)
         return super().get_context_data(**context)
+
+
+
+###### REST API VIEWS ######
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from .models import Grade
+from .serializers import GradeSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import mixins
+
+@api_view(['GET','POST'])
+def grades_list(requset , format=None):
+    if requset.method == "GET":
+        grades = Grade.objects.all()
+        serializer = GradeSerializer(grades, many=True)
+        return Response(serializer.data)
+
+    elif requset.method == "POST":
+        serializer = GradeSerializer(data=requset.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def grade_detail(request, pk , format=None):
+
+    try:
+        grade = Grade.objects.get(pk=pk)
+    except Grade.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GradeSerializer(grade)
+        print
+        return Response(serializer.data)
+    
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = GradeSerializer(grade, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        grade.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+from rest_framework import generics
+
+class StudentGrade(generics.ListAPIView):
+    serializer_class = GradeSerializer
+
+    def get_queryset(self):
+
+        queryset = Grade.objects.all()
+        student = self.request.query_params.get('student', None)
+        test = self.request.query_params.get('test', None)
+        
+        if student is not None:
+            queryset = queryset.filter(student = student , test = test )
+            return queryset
+
+    

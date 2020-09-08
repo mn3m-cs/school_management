@@ -1,5 +1,6 @@
 from django.urls import path,re_path
 from . import views
+from rest_framework.urlpatterns import format_suffix_patterns
 
 app_name='school'
 
@@ -16,12 +17,22 @@ urlpatterns = [
     
     path('edit/',views.TestPerm.as_view(),name='tst'),
     
-    path('my_classrooms/',views.my_classrooms,name='my_classrooms'),
+    path('my_courses/',views.my_classrooms,name='my_courses'),
     path('course/<int:pk>/',views.CourseDetailView.as_view(),name='course'),
     
     path('course/<int:course_num>/test/<int:pk>/',views.TestDetailView.as_view(),name='test_detail'),
+
+
+
+
+
+    ## REST ##
+    path('grades/',views.grades_list),
+    path('grades/<int:pk>/',views.grade_detail),
+    path('g/',views.StudentGrade.as_view()),
     
 ]
 
 
+urlpatterns = format_suffix_patterns(urlpatterns)
 

@@ -22,13 +22,21 @@ admin.site.register(models.Teacher,TeacherModelAdmin)
 
 class TestInline(admin.StackedInline):
     model = models.Test
-    
+
+class StudentInline(admin.TabularInline):
+    model= models.Student
+    def get_queryset(request):
+        return Student.objects.filter(classroom=self.object.pk)
+
+
+class GradesInline(admin.TabularInline):
+    model = models.Grade
+
 class CourseAdmin(admin.ModelAdmin):
     inlines = [TestInline]
 admin.site.register(models.Course, CourseAdmin)
 
-class GradesInline(admin.TabularInline):
-    model = models.Grade
+
 class TestAdmin(admin.ModelAdmin):
     inlines = [GradesInline]
 admin.site.register(models.Test, TestAdmin)
