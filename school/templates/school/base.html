@@ -30,7 +30,7 @@
             {%endif%}
             <!-- if the user is teacher-->
             {% ifequal user.groups.all.0.name "Teacher" %}
-                <li class="nav-item"> <a class="nav-link" href="{% url 'school:my_classrooms' %}"> My Classrooms </a></li>        
+                <li class="nav-item"> <a class="nav-link" href="{% url 'school:my_courses' %}"> My Courses </a></li>        
             {%endifequal%}
 
             {% if user.is_authenticated %}

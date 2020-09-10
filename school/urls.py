@@ -16,7 +16,7 @@ urlpatterns = [
     
     path('edit/',views.TestPerm.as_view(),name='tst'),
     
-    path('my_classrooms/',views.my_classrooms,name='my_classrooms'),
+    path('my_courses/',views.my_classrooms,name='my_courses'),
     path('course/<int:pk>/',views.CourseDetailView.as_view(),name='course'),
     
     path('course/<int:course_num>/test/<int:pk>/',views.TestDetailView.as_view(),name='test_detail'),

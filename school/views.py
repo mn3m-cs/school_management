@@ -83,7 +83,7 @@ def my_classrooms(request):
         if course.teacher_of_course == teacher:
             courses.append(course)
 
-    return render(request,'school/my_classrooms.html',context={'classrooms':classrooms,
+    return render(request,'school/my_courses.html',context={'classrooms':classrooms,
                                                                 'teacher':teacher,
                                                                 'courses':courses})
 
