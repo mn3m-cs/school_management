@@ -4,7 +4,7 @@ from django.views.generic import TemplateView,ListView,DetailView
 from .models import Classroom,Student,Teacher,Course,Test,Grade
 from datetime import date 
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 
@@ -162,3 +162,16 @@ class TestDetailView(UserPassesTestMixin, DetailView):
         context['enrolled_students'] = students_grades
         context.update(kwargs)
         return super().get_context_data(**context)
+
+
+#### API VIEWS #####
+from rest_framework import generics
+from .serializers import GradeSerializer
+import django_filters.rest_framework
+
+class Grades(generics.ListCreateAPIView):
+    queryset = Grade.objects.all()
+    serializer_class = GradeSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['test','student']
+

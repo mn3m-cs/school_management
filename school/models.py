@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
 
 
 class School(models.Model):
@@ -105,9 +107,20 @@ class Grade(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     student = models.ForeignKey(Student,on_delete=models.CASCADE)
     value = models.PositiveSmallIntegerField()
+    #uniqe_together = ['test','student']
 
     def __str__(self):
         return str(self.value)
+
+    def save(self, *args, **kwargs):
+        ''' if student have grade in this test, update grade '''
+        grades = Grade.objects.filter(student=self.student,test=self.test)
+        if grades:
+            grades = Grade.objects.filter(student=self.student,test=self.test).update(value=self.value)
+        else:
+            super(Grade, self).save(*args, **kwargs)
+
+
 
 '''
 class Parents(models.Model):

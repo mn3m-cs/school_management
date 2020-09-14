@@ -22,9 +22,8 @@ urlpatterns = [
     #re_path(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     #re_path(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path('admin/', admin.site.urls),
-
     path('school/',include('school.urls')),
     path('accounts/',include('accounts.urls')),
-    
-    
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
