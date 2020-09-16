@@ -168,6 +168,7 @@ class TestDetailView(UserPassesTestMixin, DetailView):
 from rest_framework import generics
 from .serializers import GradeSerializer
 import django_filters.rest_framework
+from rest_framework.response import Response
 
 class Grades(generics.ListCreateAPIView):
     queryset = Grade.objects.all()
@@ -175,3 +176,13 @@ class Grades(generics.ListCreateAPIView):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['test','student']
 
+
+class UpdateGrade(generics.UpdateAPIView):
+    queryset = Grade.objects.all()
+    serializer_class = GradeSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['test','student']
+    lookup_field = 'pk'
+
+    def put(self, request, *args, **kwargs):
+            return self.partial_update(request, *args, **kwargs)

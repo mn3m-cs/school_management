@@ -3,6 +3,8 @@
 
 {%block head%}
 <title>{{test.name}}</title>
+<script src="{% static 'js/grade.js' %}" defer></script>
+<link rel="stylesheet" href="{% static 'css/test.css' %}">
 {%endblock%}
 
 {%block body%}
@@ -11,9 +13,11 @@
     <p>TEST:  {{test.name}} </p>
     <p>COURSE: {{test.course}} </p>
     <h3>Students:</h3>
-<table class="table">
+
+<table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
+            <th>Grade PK </th>
             <th scope="col">Student</th>
             <th scope="col">Grade</th>    
         </tr>
@@ -21,13 +25,14 @@
     <tbody>
         {%for student,grade in enrolled_students.items %}
         <tr>
-            <td>{{student}} </td>
-            <td> {{grade}}</td>
+            <td>{{grade.pk}}</td>
+            <td>{{student}}</td>
+            <td> <input type="number" name="grade" class="grade" value="{{grade}}">
+            </td>
         </tr>
         {%endfor%}
     </tbody>
 </table>
-
 
 
 

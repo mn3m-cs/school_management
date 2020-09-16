@@ -24,6 +24,7 @@ urlpatterns = [
     
     #API
     path('grade_api/',views.Grades.as_view(), name='grade_api'),
+    path('update_grade_api/<int:pk>/',views.UpdateGrade.as_view(), name='update_grade'),
 
 ]
 
