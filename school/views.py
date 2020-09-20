@@ -23,14 +23,19 @@ class ClassroomDetailView(DetailView):
     context_object_name = 'classroom'
 
     def get_context_data(self, **kwargs):
-        """return students_nubmer in the classroom"""
+        """return students_nubmer in the classroom and get teachers of the classroom"""
         context = {}
+        courses_in_this_classroom = Course.objects.filter(classroom=self.object)
+        teachers = []
+        for course in courses_in_this_classroom:
+            teachers.append(course.teacher_of_course)
         if self.object:
             context['object'] = self.object
             context_object_name = self.get_context_object_name(self.object)
+            
             if context_object_name:
                 context['students_number'] = Student.objects.filter(classroom=self.object.pk).count()
-        context.update(kwargs)
+                context['teachers'] = teachers
         return super().get_context_data(**context)
 
 class TeachersListView(ListView):
@@ -74,18 +79,17 @@ class TestPerm(PermissionRequiredMixin, TemplateView):
 #----------------Teacher Views ----------------#
 
 @user_passes_test(lambda u: u.groups.filter(name='Teacher').exists())
-def my_classrooms(request):
+def my_courses(request):
     teacher = Teacher.objects.get(user=request.user)
-    classrooms = teacher.classrooms.all()
+    #classrooms = teacher.classrooms.all()
     all_courses = Course.objects.all()
     courses = []
     for course in all_courses:
         if course.teacher_of_course == teacher:
             courses.append(course)
 
-    return render(request,'school/my_courses.html',context={'classrooms':classrooms,
-                                                                'teacher':teacher,
-                                                                'courses':courses})
+    return render(request,'school/my_courses.html',context={'teacher':teacher,
+                                                            'courses':courses})
 
 class CourseDetailView(UserPassesTestMixin, DetailView):
     def test_func(self):
@@ -169,6 +173,18 @@ from rest_framework import generics
 from .serializers import GradeSerializer
 import django_filters.rest_framework
 from rest_framework.response import Response
+from rest_framework import permissions
+
+class IsUserIsCourseTeacher(permissions.BasePermission):
+    """
+    Custom permission to only allow teachers of an object to edit it.
+    """
+    def has_object_permission(self, request, view, obj):
+        allowed_methods = ('PUT',)
+        if request.method in allowed_methods:            
+            print(obj.test.course.teacher_of_course.user)
+            return obj.test.course.teacher_of_course.user == request.user
+            #return permissions.IsAuthenticated.has_permission(self, request, view)
 
 class Grades(generics.ListCreateAPIView):
     queryset = Grade.objects.all()
@@ -183,6 +199,9 @@ class UpdateGrade(generics.UpdateAPIView):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['test','student']
     lookup_field = 'pk'
+    permission_classes = [IsUserIsCourseTeacher]
 
     def put(self, request, *args, **kwargs):
             return self.partial_update(request, *args, **kwargs)
+
+

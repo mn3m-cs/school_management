@@ -127,3 +127,12 @@ MEDIA_URL = '/media/'
 
 LOGOUT_REDIRECT_URL = 'school:home'
 LOGIN_REDIRECT_URL = 'school:home'
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}

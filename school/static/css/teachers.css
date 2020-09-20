@@ -10,7 +10,7 @@
     border: 2px solid black;
     border-radius: 10px;
     margin: 10px;
-    height: 440px;    
+    height: 360px;    
     width: 31%;
     text-align: center;
     flex-grow: 0;
@@ -18,13 +18,14 @@
 }
 
 .fimg{
-    height: 330px;
+    height: 70%;
     width: 85%;
     border-radius: 10px;
 }
 
 .job{
     letter-spacing: 3px;
+    font-size: 1em;
 }
 * {box-sizing: border-box}
 

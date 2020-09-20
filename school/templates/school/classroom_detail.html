@@ -107,11 +107,11 @@
     </thead>
     <tbody>       
 
-{% for teacher in classroom.classroom_teachers.all %}
+{% for teacher in teachers %} <!--clssroom_teachers is the related_name -->
 <tr>
     <td><a href="{% url 'school:teacher' pk=teacher.pk %}">{{teacher.name}}</a></td>
     <td>{{teacher.specialization}}</td>
-  </tr>
+</tr>
 {%endfor%}
         </tbody>
         </table>
@@ -129,7 +129,7 @@
   {%for student in classroom.students.all %}
   <tr>
       <td><a href="{% url 'school:student_detail' pk=student.pk  %}">{{student.name}}</a></td>
-      <td>{{student.level}}</td>
+      <td>{{student.classroom.level}}</td>
     </tr>
   {%endfor%}
           </tbody>

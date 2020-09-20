@@ -17,17 +17,17 @@
 <table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
-            <th>Grade PK </th>
+            <th class='pk-col'>Grade PK </th>
             <th scope="col">Student</th>
-            <th scope="col">Grade</th>    
+            <th class='grade-col' scope="col">Grade</th>    
         </tr>
     </thead>
     <tbody>
         {%for student,grade in enrolled_students.items %}
         <tr>
-            <td>{{grade.pk}}</td>
-            <td>{{student}}</td>
-            <td> <input type="number" name="grade" class="grade" value="{{grade}}">
+            <td class='pk-col'>{{grade.pk}}</td>
+            <td class="student_name">{{student}}</td>
+            <td class='grade-col'> <input type="number" name="grade" class="grade" value="{{grade}}">
             </td>
         </tr>
         {%endfor%}

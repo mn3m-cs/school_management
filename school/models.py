@@ -21,13 +21,13 @@ class Teacher(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=264)
     phone =models.IntegerField()
-    classrooms = models.ManyToManyField('school.Classroom',related_name='classroom_teachers')
-    #specialization = models.ForeignKey('school.Course',on_delete=models.SET_NULL,null=True)
+    specialization = models.CharField(max_length=64)
+    #classrooms = models.ManyToManyField('school.Classroom',related_name='classroom_teachers')
     birth_date = models.DateField(verbose_name='Date of birth')
     #classrooms = models.ForeignKey('school.Classroom',on_delete=models.SET_NULL,related_name='classrooms',null=True)
     photo = models.ImageField(upload_to='teachers/')
     achievements = models.TextField(max_length=1000,null=True,blank=True)
-    is_teacher = models.BooleanField(default=True)
+    #is_teacher = models.BooleanField(default=True)
 
     class Meta:
         permissions = (("can_edit_grades","Edit students grades"),)
@@ -74,7 +74,6 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
-
 class Course(models.Model):
     code = models.IntegerField(unique=True)
     name = models.CharField(max_length=64)
@@ -92,9 +91,11 @@ class Course(models.Model):
             if student.classroom == classroom:
                 student.courses.add(self)
 
+
     def save(self, *args, **kwargs):
-        self.add_course_to_students_in_class()
+        ''' we need to save course before add m2m relation'''
         super(Course, self).save(*args, **kwargs)
+        self.add_course_to_students_in_class()
 
 class Test(models.Model):
     course = models.ForeignKey(Course,on_delete=models.CASCADE)
@@ -120,17 +121,6 @@ class Grade(models.Model):
         else:
             super(Grade, self).save(*args, **kwargs)
 
-
-
-'''
-class Parents(models.Model):
-    father = models.ForeignKey('school.Father',on_delete=models.SET_NULL,null=True)
-    mother = models.ForeignKey('school.Mother',on_delete=models.SET_NULL,null=True)
-    home_phone = models.IntegerField()
-
-    def __str__(self):
-        return self.name
-'''
 class Father(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length=64)

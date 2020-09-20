@@ -49,4 +49,5 @@ function updateValue(event){
     url = `http://127.0.0.1:8000/school/update_grade_api/${grade_pk}.json?`;
     postData(url,{value:newValue})//.then(data =>{console.log(data)});
     /* print updated beside this grade or change color*/
+    const cell = event.target;
 }
