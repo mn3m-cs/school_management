@@ -11,6 +11,10 @@ admin.site.register(models.Grade)
 #admin.site.register(models.Parents)
 admin.site.register(models.Father)
 admin.site.register(models.Mother)
+admin.site.register(models.Specialization)
+admin.site.register(models.Class)
+admin.site.register(models.Material)
+admin.site.register(models.Meeting)
 
 
 '''

@@ -1,0 +1,52 @@
+{% extends 'school/base.html' %}
+{%load static%}
+
+{%block head%}
+<title> Mettings </title>
+<link rel="stylesheet" href="{% static 'css/meetings.css' %}">
+{%endblock%}
+
+
+{%block body%}
+<div class="container mt-5">
+    <div id='schedule_meeting'>
+        <div id='email'>
+
+            <!-- <label for="to" class='labels'>To</label>
+            <select name='to' class="form-select mb-4">
+                <option value="" disabled selected>------</option>
+                <option value="mothers">Mothers</option>
+                <option value="fathers">Fathers</option>
+                <option value="both">Fathers and Mothers</option>
+            </select>
+
+            <div id='email-subject'>
+                <label for="email-subject" class='labels'>Subject</label>
+                <input name='email-subject' type="text" class='mb-4'>
+            </div>
+            
+            <div id='email-body'>
+                <label for="email-body" class='labels'>Body</label>
+                <textarea name="email-body" id="" cols="100" rows="10" ></textarea>    
+            </div>
+ -->
+        <form method="POST" novalidate>
+            {%csrf_token%}
+            {% include 'includes/form.html' %}
+            <button class='btn btn-primary btn-lg mt-3' type='submit'> Send </button>
+        </form>
+
+        </div>
+    </div>
+
+<div id='mettings'>
+
+</div>
+
+
+
+
+
+
+</div>
+{%endblock%}

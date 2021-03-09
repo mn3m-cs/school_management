@@ -1,25 +1,73 @@
-{% extends 'school/base.html' %}
-{%load static%}
+{% extends 'school/base.html' %} {%load static%} {%block head%}
+<title>{{student | title}}</title>
+<link rel="stylesheet" href="{% static 'css/student.css' %}" />
+{%endblock%} {%block body%}
 
-{%block head%}
-<title>{{student.name}}</title>
-<link rel="stylesheet" href="{% static 'css/student.css' %}">
-{%endblock%}
+<div class="container mt-5">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td rowspan="5" id="td-pic">
+          {%if student.photo %}
+          <img
+            class="profile-pic"
+            src="{{student.photo.url}}"
+            alt="Student Pic"
+          />
+          {%else%}
+          <img class="profile-pic" src="{%static 'default/student.jpg' %}" />
+          {%endif%}
+        </td>
+      </tr>
+      <tr>
+        <td class="titleCell"><b>Name</b></td>
+        <td>{{student | title}}</td>
+      </tr>
+      <tr>
+        <td class="titleCell"><b>Academic Number</b></td>
+        <td>{{student.academic_number}}</td>
+      </tr>
+      <tr>
+        <td><b>Level</b></td>
+        <td>{{student.classroom.level}}</td>
+      </tr>
+      <tr>
+        <td><b>Classroom Number</b></td>
+        <td>{{student.classroom}}</td>
+      </tr>
 
+      <tr>
+              <td></td>
+        <td class="titleCell"><b>Birth Date</b></td>
+        <td>{{student.birth_date}}</td>
+      </tr>
+      <tr>
+              <td class='noBorder'></td>
+        <td class="titleCell"><b>Age</b></td>
+        <td>{{age}} year</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><b>Address</b></td>
+        <td>{{student.address}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><b>Home Phone</b></td>
+        <td>{{student.home_phone}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><b>Father</b></td>
+        <td>{{student.father | title}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><b>Mother</b></td>
+        <td>{{student.mother |title}}</td>
+      </tr>
 
-{%block body%}
-<div class="container">
-<img id='profile_pic' src="{{student.photo.url}}" alt="">
-<p>Name: {{student.name}}</p>
-<p>Academic Number: {{student.academic_number}}</p>
-<p>Classroom Number: {{student.classroom}}</p>
-<p>Leve: {{student.classroom.level}}</p>
-<h5>Personal Information</h5>
-<p>Birth Date: {{student.birth_date}}</p>
-<p>Age: </p>
-<p>Address: {{student.address}}</p>
-<p>Home Phone: {{student.home_phone}}</p>
-<p>Father: {{student.father}}</p>
-<p>Mother: {{student.mother}}</p>
+</tbody>
+  </table>
 </div>
 {%endblock%}

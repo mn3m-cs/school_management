@@ -5,15 +5,23 @@
 <title>{{test.name}}</title>
 <script src="{% static 'js/grade.js' %}" defer></script>
 <link rel="stylesheet" href="{% static 'css/test.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
 {%endblock%}
 
 {%block body%}
 
 <div class="container mt-4">
-    <p>TEST:  {{test.name}} </p>
-    <p>COURSE: {{test.course}} </p>
-    <h3>Students:</h3>
+<div id='test-details'>
+    <p><span class='p-name'> TEST:</span>  <span class="p-content">{{test.name}}</span> </p>
+    <p> <span class='p-name'>COURSE:</span> <span class="p-content">{{test.course}}</span> </p>
+    <p> <span class='p-name'>Date:</span> <span class="p-content">{{test.date}}</span> </p>
+    <p> <span class='p-name'>Duration:</span> <span class="p-content">{{test.duration}}</span> </p>
+    <p> <span class='p-name'>Mark:</span> <span class="p-content">{{test.mark}}</span> </p>
+    <p><a class='delete_test' href="{% url 'school:delete_test' pk=test.pk%}">Delete Test</a></p>
+</div>
 
+<div id='students'>
+<h1 id='students-header'>Students:</h2>
 <table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
@@ -26,17 +34,20 @@
         {%for student,grade in enrolled_students.items %}
         <tr>
             <td class='pk-col'>{{grade.pk}}</td>
-            <td class="student_name">{{student}}</td>
+            <td class="student_name">{{student |title}}</td>
+            <!-- Already we check that user is the teacher of the course in REST API request, so if admin try 
+                to edit grade manually or edit request it will throw 403, "PUT /school/update_grade_api/17.json? HTTP/1.1" 403
+            -->
+            {%if test.course.teacher_of_course.user == user and user.teacher %}
             <td class='grade-col'> <input type="number" name="grade" class="grade" value="{{grade}}">
+            {%elif user.is_staff%}
+            <td class='grade-col'> <input type="number" name="grade" class="grade" value="{{grade}}" disabled>
+            {%endif%}
             </td>
         </tr>
         {%endfor%}
     </tbody>
 </table>
-
-
-
-
 </div>
-
+</div>
 {%endblock%}

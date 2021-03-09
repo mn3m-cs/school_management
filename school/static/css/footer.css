@@ -1,0 +1,33 @@
+/*alone To be inherited in all Pages */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+/* Manipluate margin-bottom of body on other pages */
+
+body {
+    margin-bottom: 50px;
+    
+}
+
+#main-footer{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color:black;
+    width: 20vw;
+    text-align: center;
+    padding-top: 10px;
+    display:block;
+}
+
+#main-footer p{
+    color: white;
+}
+
+@media screen and (max-width:576px){
+    #main-footer{
+        width:60%;
+    }
+}

@@ -2,7 +2,7 @@
 {%load static%}
 
 {% block head %}
-<title>Classrooms</title>
+<title>{{school}} Classrooms</title>
 <link rel="stylesheet" href="{% static 'css/classrooms.css' %}">
 {% endblock %}
 
@@ -11,10 +11,13 @@
 {% if user.is_staff %} <!-- if manager-->
 
 {% if classrooms %}
-  <div class="classrooms mt-4">
+  <div class="classrooms mt-5">
       <div class="container ">
-          <h1 class="mb-4">Dar Hagr School Classrooms</h1>        
-      <table class="table table-bordered table-hover">
+        <div id='classrooms_header'>
+          <h1 class="mb-4"> Classrooms of {{school}}</h1>       
+        </div>
+        <h2 class='mb-4' id='classrooms_header_number'>Number Of Classrooms: <b>{{classrooms.count}}</b> </h2> 
+        <table class="table table-bordered table-hover classrooms-table">
           <thead class="thead-dark">
             <tr>
               <th class='letter' scope="col">Classroom Number</th>
@@ -24,7 +27,7 @@
           <tbody>       
   {%for classroom in classrooms %}
   <tr>
-      <td><a href="{% url 'school:classroom_detail' pk=classroom.pk %}">{{classroom.class_number}}</a></td>
+      <td class="class-list-number"><a href="{% url 'school:classroom_detail' pk=classroom.pk %}">{{classroom.class_number}}</a></td>
       <td>{{classroom.level}}</td>
     </tr>
   {%endfor%}

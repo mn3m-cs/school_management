@@ -1,47 +1,189 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
-    {%block head%}
-    <title>SCHOOL</title>
-    {%endblock%}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{% static 'img/favicon-32x32.png' %}" type="image/x-icon" sizes="32x32">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+  </script>
+  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'css/footer.css'%}">
+  {%block head%}
+  <title>{{school}}</title>
+  {%endblock%}
+
 </head>
-<body >
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="{% url 'school:home' %}"> Dar Hagr School </a>
 
-        <ul class="navbar-nav  mr-auto">
-            <!-- if the user is manager-->
-            {%if user.is_staff %}
-                <li class="nav-item"> <a class="nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'school:classrooms' %}"> Classrooms </a></li>
-            {%endif%}
-            <!-- if the user is teacher-->
-            {% ifequal user.groups.all.0.name "Teacher" %}
-                <li class="nav-item"> <a class="nav-link" href="{% url 'school:my_courses' %}"> My Courses </a></li>        
-            {%endifequal%}
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <a class="navbar-brand" href="{% url 'school:home' %}">{{school}}</a>
 
-            {% if user.is_authenticated %}
-                <li class="nav-item"> <a class="nav-link" href="{% url 'accounts:logout' %}"> Logout</a></li>
-            {%else%}
-                <li class="nav-item"> <a class="nav-link" href="{% url 'accounts:login' %}"> Login</a></li>
-            {%endif%}
-        </ul>
-      </nav>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <!-- Anonymos view-->
+      {%if user.is_anonymous %}
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
+      {%endif%}
+
+      <!-- if the user is manager-->
+      {%if user.is_staff %}
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:classrooms' %}"> Classrooms </a></li>
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:students' %}"> Students </a></li>
+      <li class='nav-item'> <a class='nav-link' href="{% url 'school:meetings' %}"> Meeting </a> </li>
+      {%endif%}
+
+      <!-- if the user is teacher-->
+      {% ifequal user.groups.all.0.name "Teacher" %}
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:my_courses'  %}"> My Courses </a></li>
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:create_test'  %}"> Create Test </a></li>
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:upload_material'  %}"> Upload Material </a></li>
+      {%endifequal%}
+
+      <!--Student View-->
+      {% ifequal user.groups.all.0.name "Student" %}
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:student_courses'  %}"> My Courses </a></li>
+      {%endifequal%}
+
+      <!-- Parents View -->
+      {% ifequal user.groups.all.0.name "Father" %}
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
+      <li class='nav-item'> <a class='nav-link' href="{% url 'school:sons_list' %}"> Sons </a></li>
+      {%endifequal%}
+
+      {% ifequal user.groups.all.0.name "Mother" %}
+      <li class="nav-item"> <a class="nav-link" href="{% url 'school:teachers' %}"> Teachers </a></li>
+      <li class='nav-item'> <a class='nav-link' href="{% url 'school:sons_list' %}"> Sons </a></li>
+      {%endifequal%}
+    </ul>
+
+
+    <!-- for all users -->
+    {% if user.is_authenticated %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainMenu">
+      <ul class="navbar-nav ml-auto">
+
+        {%if user.is_staff.photo%}
+        <li class='nav-item' style='padding:0;width:46px;'> <a class='nav-link' style="padding: 0;" href=""><img
+              id='account-picture' src="{{user.student.photo.url}}" style='margin:0' width="46" height="40"></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            {{ user.username }}</a>
+
+          {%elif user.student.photo%}
+        <li class='nav-item' style='padding:0;width:46px;'> <a class='nav-link' style="padding: 0;" href=""><img
+              id='account-picture' src="{{user.student.photo.url}}" style='margin:0' width="46" height="40"></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            {{ user.student  | title }}</a>
+
+          {%elif user.teacher.photo%}
+        <li class='nav-item' style='padding:0;width:46px;'> <a class='nav-link' style="padding: 0;" href=""><img
+              id='account-picture' src="{{user.teacher.photo.url}}" style='margin:0' width="46" height="40"></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            {{ user.teacher | title }}</a>
+
+          {%elif user.father.photo%}
+        <li class='nav-item' style='padding:0;width:46px;'> <a class='nav-link' style="padding: 0;" href=""><img
+              id='account-picture' src="{{user.father.photo.url}}" style='margin:0' width="46" height="40"></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            {{ user.father  | title}}</a>
+
+          {%elif user.mother.photo%}
+        <li class='nav-item' style='padding:0;width:46px;'> <a class='nav-link' style="padding: 0;" href=""><img
+              id='account-picture' src="{{user.mother.photo.url}}" style='margin:0' width="46" height="40"></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            {{ user.mother  | title}}</a>
+
+          {%else%}
+        <li class='nav-item' style='padding:0;width:46px;'> <a class='nav-link' style="padding: 0;" href=""><img
+              id='account-picture' src="{%static 'default/avatar.png'%}" style='margin:0' width="46" height="40"></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            {{ user.first_name  | title}} {{ user.last_name  | title}} </a>
+          {%endif%}
+
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+            <!-- TODO: add themes -->
+            <!-- <div id='themes'>
+              <span id='optimal'></span>
+
+            </div>
+            <div class="dropdown-divider"></div> -->
+            <a class="dropdown-item" href='{% url "password_change" %}'>Change password</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'accounts:logout' %}">Log out</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    {%else%}
+    <form class="form-inline ml-auto">
+      <a href="{%url 'accounts:login'%}" class="btn btn-warning ">Log in</a>
+    </form>
+    {%endif%}
+    </div>
+  </nav>
+
+
+  {% block body%}
+  {% if messages %}
+  <div class="container mt-2">
+
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading"></h4>
+      {%for msg in messages %}
+      <!--<p> {{msg}}</p> -->
+      <h4 class="alert-heading">{{msg}}</h4>
+      <p class="mb-0"></p>
+
+      {%endfor%}
+    </div>
+  </div>
+  {%endif%}
+
+  <div id='home-page'>
+    <h1 id='school-title'>{{school}} Welcomes You</h1>
+    <a id="apply" href="{% url 'applications:apply' %}"> Student Application</a>
+    <img id='school-pic' src="{%static 'default/school.jpg' %}">
+
   </div>
 
-<div class="container mt-4 ">    
-{% block body%}
-
-{%endblock%}
-</div>
+  {%endblock%}
+  <footer id='main-footer'>
+    <p>Powered By <a target='blank' href="https://www.facebook.com/profile.php?id=100034115106759">XYZ</a> Company</p>
+  </footer>
 
 </body>
+
 </html>

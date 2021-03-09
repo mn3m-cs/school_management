@@ -1,0 +1,96 @@
+{% extends 'school/base.html' %}
+{%load static%}
+
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/sons.css' %}">
+<script src="{% static 'js/courses.js' %}" defer></script>
+{%endblock%}
+
+
+{%block body%}
+<div class="container mt-5">
+<div id='profile-pic-div'>  
+        {%if son.photo %}
+        <img class='profile-pic' src="{{son.photo.url}}" alt="">
+        {%else%}
+        <img class='profile-pic' src="{%static 'default/student.jpg' %}">
+        {%endif%}
+        <span class='son-name'>{{son | title}}</span>
+    </div>
+<hr>
+</div>
+
+<div class="container mt-5">
+    <div class="tab">
+        <button class="tablinks" onclick="openSection(event, 'details')" id="defaultOpen"> Details </button>
+        <button class="tablinks" onclick="openSection(event, 'courses')" > Courses </button>
+        <button class="tablinks" onclick="openSection(event, 'recent_tests')" > Recent Tests </button>
+      </div>
+      
+<div id='details' class="tabcontent">
+    <p>Name: {{son | title}}</p>
+    <p>Academic Number: {{son.academic_number}}</p>
+    <p>Classroom Number: {{son.classroom}}</p>
+    <p>Level: {{son.classroom.level}}</p>
+    <h5>Personal Information</h5>
+    <p>Birth Date: {{son.birth_date}}</p>
+    <p>Age:{{age}} </p>
+    <p>Address: {{son.address}}</p>
+    <p>Home Phone: {{son.home_phone}}</p>
+    <p>Father: {{son.father}}</p>
+    <p>Mother: {{son.mother}}</p>
+    
+</div>
+
+<div id='courses' class='tabcontent'>
+{%if son.classroom.course_set.all%}
+<table class='table border'>
+<thead class='thead-dark'>
+    <th>Course</th>
+    <th>Teacher</th>
+</thead>
+<tbody>
+    {%for course in son.classroom.course_set.all %}
+    <tr>
+        <td>{{course.name}}</td>
+        <td>{{course.teacher_of_course |title}}</td>
+    </tr>
+    {%endfor%}
+    
+</tbody>
+</table>
+{%else%}
+<h3>No courses yet.</h3>
+{%endif%}
+</div>
+
+<div id='recent_tests' class='tabcontent'>
+{%if tests%}
+<table class='table border'>
+<thead class='thead-dark'>
+    <th>Test</th>
+    <th>Course</th>
+    <th>Date</th>
+    <th>Mark</th>
+    <th>Full Mark</th>
+</thead>
+<tbody>
+    {%for test,grade in tests.items %}
+    <tr>
+        <td>{{test.name}}</td>
+        <td>{{test.course}}</td>
+        <td>{{test.date |date:'d-m-Y , h:i A'}}</td>
+        <td>{{grade}}</td>
+        <td>{{test.mark}}</td>
+    </tr>
+    {%endfor%}
+</tbody>
+</table>
+
+{%else%}
+<h2>No tests yet</h2>
+{%endif%}
+</div>
+
+</div>
+{%endblock%}

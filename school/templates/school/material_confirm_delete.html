@@ -1,0 +1,20 @@
+{%extends 'school/base.html' %}
+{%load static%}
+
+{%block head%} {%endblock%}
+
+{%block body%}
+<div class="container mt-4">
+<form method="post">
+    {%csrf_token%}
+    {%include 'includes/form.html' %}
+    <h2>Are you sure to delete <b>{{material.title}}</b>?</h2><br>
+    <button type="submit" class='btn btn-danger btn-lg'> Delete </button>
+    <a href="{%url 'school:course' material.course.pk %}"> Cancel </a> <!-- if i use <button> in cancel, the view will delete if you click cance :), or click delete ofcourse-->
+
+</form>
+
+</div>
+
+
+{%endblock%}

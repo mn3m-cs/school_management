@@ -1,0 +1,21 @@
+{% extends 'school/base.html' %}
+{%load static%}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/test.css' %}">
+{%endblock%}
+
+{%block body%}
+<div class="container mt-4 deletion">
+    
+<form method="post" novalidate>
+{%csrf_token%}
+<p id='delete_msg'>Are you sure to delete <strong>{{test.name}}</strong> test?</p>
+<button type="submit" class='btn btn-danger btn-lg del-btn'> Delete Test</button>
+<button class="btn btn-warning btn-lg"> <a class='cancel' href="{% url 'school:test_detail' pk=test.pk course_num=test.course.pk%}"> Cancel </a></button>
+
+</form>
+</div>
+
+
+
+{%endblock%}

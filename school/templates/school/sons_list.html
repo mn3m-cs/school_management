@@ -1,0 +1,42 @@
+{% extends 'school/base.html' %}
+{%load static%}
+
+{%block head%}
+
+{%endblock%}
+
+
+{%block body%}
+<div class="container mt-5">
+
+{%if sons%}
+
+{%if user.father%}
+<h4 class='mb-4'>Sons of Mr {{user.father}}</h4>
+{%endif%}
+{%if user.mother%}
+<h4 class='mb-4'>Sons of Mrs {{user.mother}}</h4>
+{%endif%}
+
+<table class='table border'>
+    <thead class='thead-dark'>
+        <th>Name</th>
+        <th>Level</th>
+        <th>Classroom</th>
+    </thead>
+    <tbody>
+        {%for son in sons%} <!-- son is student instance-->
+            <tr>
+                <td><a href="{% url 'school:son_detail' son.pk %}">{{son  | title}}</a></td>
+                <td>{{son.classroom.level}}</td>
+                <td>{{son.classroom}}</td>
+            </tr>
+        {%endfor%}
+        </tbody>
+</table>
+{%else%}
+<h2>No sons Here.</h2>
+{%endif%}
+</div>
+
+{% endblock%}

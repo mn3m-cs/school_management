@@ -1,38 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
-</head>
-<body>
-    {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+{%extends 'school/base.html'%}
+{%load static%}
+{%block head%}
+<title>Login</title>
+<link rel="stylesheet" href='{%static "css/accounts/accounts.css"%}'>
+{%endblock%}
 
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
+{%block body%}
+<div class="container">
+    <h1 class="text-center logo my-4">
+        <a href="">{{school}} </a>
+    </h1>
 
-<form method="post" >
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value="login">
-</form>
-</body>
-</html>
+<div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-8">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Log in</h3>
+          <form method="post" novalidate>
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"> <!-- if not looged in user request page require to br login,
+            he will be redirected to login , and after he login will be redirected to the first requested page-->
+            {% include 'includes/form.html' %}
+            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+          </form>
+        </div> 
+        <div class="card-footer text-muted text-center">
+        Contact with school management to get your account.
+        </div>
+      </div>
+      <div class="text-center py-2">
+        <small>
+          <a href="{% url 'password_reset'%}" class="text-muted">Forgot your password?</a>
+        </small>
+      </div>
+    </div>
+  </div>
+  </div>
+{%endblock%}

@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework',
     'django_filters',
-
+    'widget_tweaks',
+    'applications',
+    
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Cairo'
 
 USE_I18N = True
 
@@ -136,3 +138,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# gmail SMTP
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mohamedabdo581@gmail.com'
+EMAIL_HOST_PASSWORD = 'esamlooguiqwgisq'
+DEFAULT_FROM_EMAIL = 'mohamedabdo581@gmail.com'

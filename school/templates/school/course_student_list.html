@@ -1,0 +1,32 @@
+{% extends 'school/base.html' %} {%load static %} 
+{%block head%} 
+<style>
+  .studentCourse{
+    margin-top:20px;
+    font-size: 1.4rem;
+    text-decoration: none;
+  }
+  .studentCourse a:hover{
+    text-decoration: none;
+    
+    color: red;
+  }
+</style>
+{%endblock%}
+
+{%block body%}
+<div class="container mt-4">
+  {% if courses %}
+  <h2>Courses of <b>{{user.student | title}}</b></h2>
+  <ul>
+    {%for course in courses%}
+    <li class='studentCourse'><a href="{% url 'school:student_course_detail' course.pk%}">{{course.name}}</a></li>
+    {%endfor%}
+  </ul>
+  
+  {%else%}
+  <h3>This Student Has no courses yet.</h3>
+  {%endif%}
+</div>
+
+{%endblock%}

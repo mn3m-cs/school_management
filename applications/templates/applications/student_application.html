@@ -1,0 +1,23 @@
+{%extends 'school/base.html' %}
+{%load static %}
+
+{%block head %}
+<title> Student Application</title>
+<link rel='stylesheet' href='{% static "css/application/application.css" %}'>
+{%endblock%}
+
+{%block body%}
+
+<div class="container mt-5">
+    <h2 id='application-header'>Student Application </h2>
+    <form method="post" novalidate>
+        {%csrf_token%}
+        {%include 'includes/form.html'%}
+        <button type="submit" class='btn btn-primary btn-lg btn-block'>Submit Application</button>
+    </form>
+
+</div>
+
+
+
+{%endblock%}

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{% static 'css/classrooms.css' %}">
 <link href="https://fonts.googleapis.com/css2?family=Lemon&display=swap" rel="stylesheet">
 <script src="{% static 'js/classroom.js'%}" defer></script>
+<script src="{% static 'js/view_schedule.js' %}" defer></script>
 {%endblock%}
 
 {%block body%}
@@ -44,7 +45,7 @@
 
 {% for teacher in classroom.classroom_teachers.all %}
 <tr>
-    <td>{{teacher.name}}</td>
+    <td>{{teacher}}</td>
     <td>{{teacher.specialization}}</td>
   </tr>
 {%endfor%}
@@ -63,7 +64,7 @@
         <tbody>       
     {%for student in classroom.students.all %}
     <tr>
-        <td>{{student.name}}</td>
+        <td>{{student}}</td>
         <td>{{student.level}}</td>
       </tr>
     {%endfor%}
@@ -72,69 +73,210 @@
 </div>
 </div>
 -->
-<div class="container mt-4">
-<div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'info')" id="defaultOpen">Classroom Information</button>
-  <button class="tablinks" onclick="openCity(event, 'teachers')">Teachers</button>
-  <button class="tablinks" onclick="openCity(event, 'students')">Students</button>
-</div>
+<div class="container">
 
-<div id="info" class="tabcontent">
+  <div id='info-table'>
     <table class="table-bordered card-table">
-      <tr>
-        <td class='td-1'>Classroom Number </td>
+      <tr class="info-tr">
+        <td class="td-1">Classroom Number </td>
         <td><b>{{classroom.class_number}}</b></td>
       </tr>
-      <tr>
-        <td class='td-1'>Classroom Level </td>
+      <tr class="info-tr">
+        <td class="td-1">Classroom Level </td>
         <td><b>{{classroom.level}}</b></td>
       </tr>
-      <tr>
-        <td class='td-1'>Students Number </td>
+      <tr class="info-tr">
+        <td class="td-1">Students Number </td>
         <td><b>{{students_number}}</b></td>
       </tr>
     </table>
-    
-    </div>
+  </div>
 
-<div id="teachers" class="tabcontent">
-  <table class="table table-bordered table-hover">
-    <thead class="thead-dark">
-      <tr>
-        <th class='letter' scope="col">Teacher Name</th>
-        <th class='letter' scope="col">Specialization</th>
-      </tr>
-    </thead>
-    <tbody>       
+  <div class="tab">
+    <button class="tablinks" onclick="openSection(event, 'classroom_courses')" id="defaultOpen">Courses</button>
+    <button class="tablinks" onclick="openSection(event, 'teachers')">Teachers</button>
+    <button class="tablinks" onclick="openSection(event, 'students')">Students</button>
+    <button class="tablinks" onclick="openSection(event, 'info')">Class schedule</button>
+  </div>
 
-{% for teacher in teachers %} <!--clssroom_teachers is the related_name -->
-<tr>
-    <td><a href="{% url 'school:teacher' pk=teacher.pk %}">{{teacher.name}}</a></td>
-    <td>{{teacher.specialization}}</td>
-</tr>
-{%endfor%}
-        </tbody>
-        </table>
-</div>
+  <div id='hidden' class="tabcontent">
+    <!-- Hidden table used to fetch classes-->
+    <table class="table" id='hidden-table'>
+      <tbody>
+        {%for class in classes%}
+        <tr>
+          <td>{{class.pk}}</td> <!-- request course by pk-->
+          <td>{{class.name}} </td> <!-- put name it in the right place with day and number-->
+          <td>{{class.day}} </td>
+          <td>{{class.class_number_in_day}}</td>
+        </tr>
+        {%endfor%}
 
-<div id="students" class="tabcontent">
-  <table class="table table-bordered table-hover">
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id='print-info'> Scheule of classroom number {{classroom.class_number}}</h3>
+
+  <div id='info' class="tabcontent">
+    <table class="table table-striped table-bordered " id="schedule">
+      <thead class="thead-dark">
+        <th class="schedule-day"></th>
+        <th class="schedule-column">1</th>
+        <th class="schedule-column">2</th>
+        <th class="schedule-column">3</th>
+        <th class="schedule-column">4</th>
+        <th class="schedule-column">5</th>
+        <th class="schedule-column">6</th>
+        <th class="schedule-column">7</th>
+        <th class="schedule-column">8</th>
+      </thead>
+
+      <tbody>
+        <tr id='0'>
+          <th>Saturday</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id='1'>
+          <th>Sunday</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id='2'>
+          <th>Monday</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id='3'>
+          <th>Tuesday</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id='4'>
+          <th>Wednesday</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="5">
+          <th>Thursday</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id='6'>
+          <th>Friday</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button id='print' class="btn btn-primary" onclick="window.print()">Print Schedule</button>
+  </div>
+
+  <div id='classroom_courses' class="tabcontent">
+    <table class="table ">
+      <thead class="thead-dark">
+        <th>Code</th>
+        <th>Name</th>
+        <th>Teacher</th>
+      </thead>
+      <tbody>
+        {% for course in classroom.course_set.all %}
+        <tr>
+          <td>{{course.pk}}</td>
+          <td><a href="{% url 'school:course' pk=course.pk %}"> {{course.name | title}} </a> </td>
+          <td>{{course.teacher_of_course | title}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+
+  <div id="teachers" class="tabcontent">
+    <table class="table table-bordered table-hover">
       <thead class="thead-dark">
         <tr>
+          <th class='letter' scope="col">Teacher Name</th>
+          <th class='letter' scope="col">Specialization</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for teacher in teachers %}
+        <!--clssroom_teachers is the related_name -->
+        <tr>
+          <td><a href="{% url 'school:teacher' pk=teacher.pk %}">{{teacher | title}}</a></td>
+          <td>{{teacher.specialization | title}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+
+  <div id="students" class="tabcontent">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th class='letter' scope="col">Number</th>
           <th class='letter' scope="col">Student Name</th>
           <th class='letter' scope="col">Student Level</th>
         </tr>
       </thead>
-      <tbody>       
-  {%for student in classroom.students.all %}
-  <tr>
-      <td><a href="{% url 'school:student_detail' pk=student.pk  %}">{{student.name}}</a></td>
-      <td>{{student.classroom.level}}</td>
-    </tr>
-  {%endfor%}
-          </tbody>
-          </table>
-</div>
+      <tbody>
+        {%for student in classroom.students.all %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td><a href="{% url 'school:student_detail' pk=student.pk  %}">{{student | title}}</a></td>
+          <td>{{student.classroom.level}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+
+
 </div>
 
 {%endblock%}

@@ -1,33 +1,85 @@
 {%extends 'school/base.html' %}
-
-{%block head%}
+{%load static %}
+{%block head %}
 <title>{{course.name}}</title>
-
+<link rel="stylesheet" href="{% static 'css/courses.css' %}">
+<script src="{% static 'js/courses.js' %}" defer></script>
 {%endblock%}
-
+ 
 {%block body%}
-<div class="container">
-    <h3>
-        Course: {{course.name}}
-        Code: {{course.code}}
-        Classroom: {{course.classroom}}
-        Teacher: {{course.teacher_of_course}}
-        </h3>
-        <h3>Students:</h3>
-        
-        {%for student in students %}
-        <p>{{student.name}}</p>
-        {%endfor%}
+<div class="container mt-4">
+<div id='info-table'>
+                <table class="table-bordered ">
+                  <tr class="info-tr">
+                    <td  class="td-1"><b>Course</b> </td>
+                    <td><b>{{course.name}}</b></td>
+                  </tr>
+                  <tr class="info-tr">
+                    <td class="td-1"><b>Teacher</b> </td>
+                    <td><b>{{course.teacher_of_course}}</b></td>
+                  </tr>
+                  <tr class="info-tr">
+                    <td class="td-1"><b>Classroom</b> </td>
+                    <td><b>{{course.classroom}}</b></td>
+                  </tr>
+                  <tr class="info-tr">
+                    <td class="td-1"><b>Students Number</b> </td>
+                    <td><b>{{students_number}}</b></td>
+                  </tr>
 
-        <center><h1>Tests</h1></center>
+                </table>
+</div>
 
+<div class="tab">
+  <button class="tablinks" onclick="openSection(event, 'students')" id="defaultOpen">Students</button>
+  <button class="tablinks" onclick="openSection(event, 'tests')" >Tests</button>
+  <button class="tablinks" onclick="openSection(event, 'material')" > Curriculum </button>
+</div>
+
+<div id='students' class="tabcontent">
+  <ol>
+  {%for student in students %}
+  {% if user.is_staff %}
+  <li class='student-names-li'><a class='students_names' href="{% url 'school:student_detail' pk=student.pk  %}">{{student | title}}</a></li>
+  {%elif user.teacher%}
+  <li class='student-names-li'>{{student | title}}</li>
+  {%endif%}
+  {%endfor%}
+  </ol>
+</div>
+
+<div id='tests' class="tabcontent">
+{%if tests%}
+<ol>
 {%for test in tests%}
-   <a href="{% url 'school:test_detail' pk=test.pk course_num=test.course.pk %}">{{test.name}}</a>
+  <li class="test-name"><a href="{% url 'school:test_detail' pk=test.pk course_num=test.course.pk %}">{{test.name | title}}</a></li>
+  {%endfor%}
+</ol>
+{%else%}
+<h3>{{course}} has no tests untill now. </h3>
+{%endif%}
+</div>
+{{test.course}}
 
-{%endfor%}
+<div id='material' class="tabcontent">
+{%if materials%}
+<table class='table border'>
+  <thead class='thead-dark'>
+    <th> Curriculum </th>
+    <th style='text-align:center'>Remove</th>
+  </thead>
+  <tbody>
+    {%for material in materials%}
+    <tr>
+      <td><a target='blank' href="{{material.material_file.url}}">{{material}}</a> <!--TODO: download on click--></td>
+      <td style='text-align:center'><a href="{% url 'school:delete_material' material.pk%}">X</a></td>
+    </tr>
+    {%endfor%}
 
+  </tbody>
+</table>
+{%endif%}
 
-
-
+</div>
 </div>
 {%endblock%}

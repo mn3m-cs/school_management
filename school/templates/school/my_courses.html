@@ -2,15 +2,17 @@
 {%load static%}
 {%block head%}
 <title>MY Classrooms</title>
+<link rel="stylesheet" href="{% static 'css/my_courses.css' %}">
 {%endblock%}
 
 {%block body %}
 <div class="container mt-4">
+<!--
 <h1><i><center> GET CLASSROOMS OF THE TEACHER</center></i></h1>
 <p>Teacher NAME:  {{teacher}}   </p>
 <p>Teacher username:     {{teacher.user}}</p>
 <p> current user: {{request.user}}</p>
-
+-->
 <!--
 {%if classrooms %}    <!-- teacher.classrooms , will work but i make it in views--
 <h3>Teacher's classrooms</h3>
@@ -23,11 +25,10 @@
 -->
 
 <div class="container">
-    <h1><i><center> GET COURSES OF THE TEACHER </center></i> </h1>
 
-<p>Courses</p>
+<h2 class="mb-4">Mr {{teacher | title}} Courses</h2>
 {% if courses %}
-<table class="table">
+<table class="table table-hover border">
 <thead class="thead-dark">
 <tr>
     <th scope="col"> Course </th>
@@ -48,6 +49,10 @@
     
 </tbody>
 </table>
+{%else%}
+<div id='no-courses-div'>
+    <p>Mr {{teacher | title}} has no courses yet.</p>
+</div>
 {%endif%}
 </div>
 {%endblock %}

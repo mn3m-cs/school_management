@@ -1,0 +1,43 @@
+accounts:
+    manager 0x13a 123
+    teacher alanweiss      password can’t be too similar to 
+    student    acox       ast 8 characters.
+    parent ajackson        an’t be entire
+
+
+SCHOOL - Full Administrations
+ -- student application
+
+1- website comes with four account type:
+first:  Managers Account
+    - classrooms list
+    - The full information about classroom (Courses , Teachers , Students , schedule) 
++ course information - enrolled students , course tests , course materials
++ teacher information , teacher current courses 
+    - students list
+    - student details + search for student
+    - schedule meetings 
+    - Poweful Admin panel
+
+
+2- Teachers Account:
+  - courses of teacher
+  - tests for this course 
+  - add students marks
+  - create test
+  - Upload materials
+  - 
+
+3- Student Account:
+  - student courses 
+  - download materials 
+  - get tests marks
+
+
+4- Parent Account:
+  - their sons
+  - son courses 
+  - marks on sons tests
+
+
+system is flexible and editable, we can modify it to meet your needs.

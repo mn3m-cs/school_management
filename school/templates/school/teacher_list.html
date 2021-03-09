@@ -2,25 +2,35 @@
 {%load static%}
 
 {% block head %}
-<title>Teachers</title>
+<title>{{school}} Teachers</title>
 <link rel="stylesheet" href="{% static 'css/teachers.css' %}">
 {% endblock %}
 
 {%block body%}
-{% if teachers %}
-<h2>Dar Hagr School Teacher's</h2>
+{% if teachers %} 
+<h2 id='teachers-title'> Teachers of {{school}}</h2>
 <div id='teachers-container'>
 {% for teacher in teachers%}
 <div class='flex-item'>
-<h2><a href="{% url 'school:teacher' pk=teacher.pk %}">{{teacher.name}}</a></h2>
-<h4 class="job">{{teacher.specialization}}</h4>
-<img class='fimg'src="{{teacher.photo.url}}" alt="">
-</div>
 
+    {%if teacher.photo %}
+    <img class='fimg'src="{{teacher.photo.url}}">
+    {%else%}
+    <img class='fimg'src="{%static 'default/undraw_profile_pic_ic5t.svg' %}">
+    {%endif%}  
+
+    <h4 class="spec">{{teacher.specialization}}</h4>
+{%if user.is_staff%}
+<h2><a class="t1" href="{% url 'school:teacher' pk=teacher.pk %}">{{teacher | title}}</a></h2>
+{%else%}
+<h2 class="t1" style='cursor:context-menu'>{{teacher | title}}</h2>
+{%endif%}
+</div>
 {%endfor%}
 </div>
-{%else%}
-No teachers Yet
 
+{%else%}
+There are No teachers here.
 {%endif%}
+</div>
 {%endblock%}

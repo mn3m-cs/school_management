@@ -1,0 +1,18 @@
+{%extends 'school/base.html' %}
+{%load static %}
+{%block head %}
+<title>Create A Test </title>
+{%endblock%}
+
+
+{%block body%}
+<div class="container mt-4">
+    <form method="post" novalidate>
+        {%csrf_token%}
+        {%include 'includes/form.html' %}
+        <button type='submit' class='btn btn-success'> Create </button>
+    </form>        
+</div>
+
+
+{%endblock%}

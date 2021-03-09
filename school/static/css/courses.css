@@ -1,0 +1,87 @@
+#info-table{
+    margin-bottom:20px;
+    background-color: #84CCD8;
+    border-radius: 5px;
+    padding: 10px;
+    font-size:1.2rem;
+
+} 
+.info-tr{
+    height: 60px;
+    text-align: center;
+}
+.td-1{
+    width: 50%;
+}
+#info-table table{
+    width: 100%;
+}
+
+
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #BD8760;
+    color:white;
+  }
+    
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+.test-name a{
+    text-decoration: none;
+    font-size: large;
+}
+
+
+/* Style course Detail */
+.students_names{
+  text-decoration: none;
+  color:black;
+  line-height:1.6;
+}
+
+.students_names:hover{
+  text-decoration: none;
+  color:black
+}
+.student-names-li{
+  font-size:1.4em;
+  height: 35px;
+}
+.student-names-li a:hover{
+  color:#2770BA
+}
+.create-test{
+  float:right;
+  margin: 15px;
+}

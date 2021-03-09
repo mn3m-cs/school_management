@@ -1,0 +1,15 @@
+Manager Account
+user: 0x13a
+password: 123
+------
+
+Teacher Account
+user: rofujedoz
+password: kjo@4657
+
+
+----------
+
+Student Account
+user: mhmd1020
+password: kjo@4657

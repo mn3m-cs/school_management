@@ -1,0 +1,48 @@
+{% extends 'school/base.html' %}
+{%load static%}
+
+{% block head %}
+<title>{{school}} Students</title>
+<link rel="stylesheet" href="{% static 'css/students.css' %}">
+<script src="{% static 'js/students.js'%}" defer></script>
+{% endblock %}
+
+{%block body%}
+<div class="container mt-5" id='container'>
+<div id='students_header'>
+<h2 class='mb-4'>Students of {{school}} </h2>
+</div>
+<h3 id='students_header_total_number'> Total Number Of Students: <b>{{students.count}}</b></h3> <!-- make numbers count from 0 to students numbers-->
+
+<div id='search'>
+    <div class="container-fluid">
+          <input id='search-input' class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
+          <button id='search-button' class="btn btn-outline-success" type="submit">Search</button>
+      </div>
+</div>
+<div id='search-result'>
+
+{%if students %}
+<table id='students-table' class="table border">
+    <thead class='thead-dark'>
+        <th>Name</th>
+        <th>Classroom</th>
+        <th>Level</th>
+    </thead>
+    <tbody id='students-table-body'>
+        {%for student in students%}
+        <tr>
+            <td class='student-name'><a href="{% url 'school:student_detail' student.pk %}">{{student | title}}</a></td>
+            <td class="classroom"><a href="{% url 'school:classroom_detail' student.classroom.pk %}">{{student.classroom}}</a></td>
+            <td>{{student.classroom.level}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+{%else%}
+<h2>Students of school will appear here.</h2>
+{%endif%}
+</div>
+</div>
+{%endblock%}

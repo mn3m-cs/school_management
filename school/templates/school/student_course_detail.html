@@ -1,0 +1,83 @@
+{%extends 'school/base.html' %}
+{%load static%}
+
+{%block head%}
+<link rel='stylesheet' href='{% static "css/student_course_detail.css" %}'>
+<script src="{% static 'js/courses.js' %}" defer></script>
+{%endblock%}
+
+
+{%block body%}
+<div class="container mt-4">
+
+<!-- Course Table-->
+<div id='info-table'>
+    <table class="table-bordered ">
+      <tr class="info-tr">
+        <td  class="td-1"><b>Course</b> </td>
+        <td><b>{{course.name}}</b></td>
+      </tr>
+      <tr class="info-tr">
+        <td class="td-1"><b>Teacher</b> </td>
+        <td><b>{{course.teacher_of_course}}</b></td>
+      </tr>
+      <tr class="info-tr">
+        <td class="td-1"><b>Classroom</b> </td>
+        <td><b>{{course.classroom}}</b></td>
+      </tr>
+    </table>
+</div>
+
+<div class="tab">
+    <button class="tablinks" onclick="openSection(event, 'material')" id="defaultOpen" >Material</button>
+    <button class="tablinks" onclick="openSection(event, 'tests')" >Tests</button>
+</div>
+  
+<div id='material' class='tabcontent'>
+{%if course.material_set.all %}
+<ul>
+{% for material in course.material_set.all %}
+<li class='studentMaterial'><a target='blank' href="{{material.material_file.url}}">{{material}}</a></li>
+{%endfor%}
+</ul>
+{%else%}
+<h2>If there are any materials, it will appear here.</h2>
+
+{%endif%}
+</div>
+
+<div id='tests' class='tabcontent'>
+{%if course.test_set.all %}
+<table class='table border'>
+<thead class="table-dark">
+    <th>Test</th>
+    <!-- <th>Student</th> -->
+    <th>Date</th>
+    <th >Duration <span id='duration'>(M)</span></th>
+    <th >Mark</th>
+    <th >Full Mark</th>
+</thead>    
+<tbody>
+    {%for test in course.test_set.all %}
+    <tr>
+    <td>{{test.name}}</td>
+    {%for g in test.grade_set.all %}
+        {%if g.student == student%}
+        <!-- <td>{{student | title}} </td> -->
+        <td>{{test.date}}</td>
+        <td >{{test.duration}}</td>
+        <td >{{g}}</td>
+        <td >{{test.mark}}</td>
+        {%endif%}
+    {%endfor%}    
+    {%endfor%}
+    </tr>
+</tbody>
+</table>
+
+{%else%}
+<h2>If there are any tests, it will appear here.</h2>
+{%endif%}
+</div>
+</div>
+{%endblock%}
