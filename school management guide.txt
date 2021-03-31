@@ -1,3 +1,0 @@
-1- Add classrooms 
-2- Add courses to the classroom
-3- add students to classroom, [else, you will have to add courses to students manually

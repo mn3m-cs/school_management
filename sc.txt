@@ -1,5 +1,0 @@
-- make students appears in Course Admin
-- make students appears in Classroom Admin
-
-problems:
-- in test: i can add grade to student not enrolled in the course
